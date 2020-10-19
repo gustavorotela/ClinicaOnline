@@ -1,18 +1,47 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { LoginComponent } from './componentes/login/login.component';
+
+import { AngularFireDatabase } from 'angularfire2/database';
+import {AngularFireModule} from 'angularfire2';
+import {AngularFireAuthModule} from 'angularfire2/auth';
+import { AngularFireStorage } from 'angularfire2/storage';
+
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
+import { VisualesModule } from './modulos/visuales/visuales.module';
+import { RegistroComponent } from './componentes/registro/registro.component';
+
+const config = {
+  apiKey: "AIzaSyAwnftqjnkgSl4_5LcoaAkU4mXryU5ORsQ",
+  authDomain: "clinica-online-d81e0.firebaseapp.com",
+  databaseURL: "https://clinica-online-d81e0.firebaseio.com",
+  projectId: "clinica-online-d81e0",
+  storageBucket: "clinica-online-d81e0.appspot.com",
+  messagingSenderId: "833612795720",
+  appId: "1:833612795720:web:4fdef7a3814709d1fc2d7d"
+};
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    LoginComponent,
+    RegistroComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    AngularFireAuthModule,
+    AngularFireModule.initializeApp(config),
+    NgbModule,
+    VisualesModule,
+    FormsModule
   ],
-  providers: [],
+  providers: [AngularFireDatabase,AngularFireStorage],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

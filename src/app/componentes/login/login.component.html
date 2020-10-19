@@ -1,0 +1,31 @@
+<div class="container-fluid bg-Login">
+    <div class="row">
+        <div class="col-md-4 col-sm-4 col-xs-12"></div>
+        <div class="col-md-4 col-sm-4 col-xs-12">
+        <form class="form-Login">
+            <div class="alert alert-dark" style="text-align: center;" role="alert">
+                <div style="color:black;">Sala de juegos - Inicio</div>
+            </div>
+          <div class="form-group">
+            <label style="color:black;">Email:</label>
+            <input style="color:black;" type="text" class="form-control"  [(ngModel)]="email" [ngModelOptions]="{standalone: true}" id="nombreUsuario" placeholder="Ingrese su email">
+          </div>  
+          <div class="form-group">
+            <label style="color:black;">Contraseña:</label>
+            <input style="color:black;" type="password" class="form-control" [(ngModel)]="pass" [ngModelOptions]="{standalone: true}" id="passwordUsuario" placeholder="Ingrese su contraseña">
+          </div>
+          <button type="button" (click)="Entrar()" class="btn btn-success btn-block">
+              Iniciar sesión</button>
+          <br>
+          <button type="button" (click)="Rapido()" class="btn btn-success btn-block">
+            Iniciar rápido</button>
+          <br>
+        <div class="form-group">
+            <button type="button" class="btn btn-primary" routerLink="/Registro">Crear mi cuenta</button>            
+        </div>
+        </form>
+  <!--<p-messages [(value)]="msgs"></p-messages>-->
+        
+        <div class="col-md-4 col-sm-4 col-xs-12"></div>
+    </div>
+  </div>

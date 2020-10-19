@@ -28,7 +28,10 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "node_modules/primeicons/primeicons.css",
+              
+              "node_modules/primeng/resources/primeng.min.css"
             ],
             "scripts": []
           },
@@ -121,8 +124,16 @@
               "devServerTarget": "ClinicaOnline:serve:production"
             }
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {}
         }
       }
-    }},
-  "defaultProject": "ClinicaOnline"
+    }
+  },
+  "defaultProject": "ClinicaOnline",
+  "cli": {
+    "analytics": "836fa20a-f8a2-49c8-aaea-ffb2a82da13a"
+  }
 }
