@@ -15,6 +15,11 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { VisualesModule } from './modulos/visuales/visuales.module';
 import { RegistroComponent } from './componentes/registro/registro.component';
+import { PrincipalComponent } from './componentes/principal/principal.component';
+import { AltaComponent } from './componentes/turnos/alta/alta.component';
+import { ModificacionComponent } from './componentes/turnos/modificacion/modificacion.component';
+import { BajaComponent } from './componentes/turnos/baja/baja.component';
+import { MenuComponent } from './componentes/menu/menu.component';
 
 const config = {
   apiKey: "AIzaSyAwnftqjnkgSl4_5LcoaAkU4mXryU5ORsQ",
@@ -30,7 +35,12 @@ const config = {
   declarations: [
     AppComponent,
     LoginComponent,
-    RegistroComponent
+    RegistroComponent,
+    PrincipalComponent,
+    AltaComponent,
+    ModificacionComponent,
+    BajaComponent,
+    MenuComponent
   ],
   imports: [
     BrowserModule,

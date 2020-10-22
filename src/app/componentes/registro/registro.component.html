@@ -34,13 +34,18 @@
             <input type="password" name="pass2"  style="width: 90%;" placeholder="Repita la contraseña" [(ngModel)]="pass2"/> 
           </div>
           <div class="form-group">
-            <div *ngFor="let item of resultadosAdivina">
-              <img src="{{imagenPreview}}" width="200px" height="200px" alt="">
+            <div class="container" *ngFor="let im of imagenPreview">
+              <img src="{{im}}" width="200px" height="200px" alt="">
+              <div class="overlay">
+                <a href="#" class="icon" title="User Profile">
+                  <i class="fa fa-user"></i>
+                </a>
+               </div>
             </div>
-            <ngx-file-drop  (onFileDrop)="dropped($event)" 
+            <ngx-file-drop  [disabled]="imagenPreview.length == 2" (onFileDrop)="dropped($event)" 
             (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)">
                 <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
-                  <button type="button" (click)="openFileSelector()">Browse Files</button>
+                  <button [disabled]="imagenPreview.length == 2" type="button" (click)="openFileSelector()">Browse Files</button>
                 </ng-template>
             </ngx-file-drop>
           </div>
