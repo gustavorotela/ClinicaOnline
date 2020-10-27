@@ -17,6 +17,7 @@ export class RegistroComponent implements OnInit {
   pass : string;
   errorMsg : string = "";
   imagen : any[] = [];
+  id:number;
   
   public files: NgxFileDropEntry[] = [];
   public msgs : any = [];
@@ -45,36 +46,37 @@ export class RegistroComponent implements OnInit {
       }
       else
       {
-        this.usuario.pass = this.pass
-        this.auth.registrar(this.usuario,this.imagen).then((res)=>{console.log("Bien"),console.log(res);
-        this.router.navigate(['/Menu']);
+        this.usuario.pass = this.pass;
+        if(this.usuario.tipo == 1)
+          this.auth.cargarUsuario(this.id, this.usuario,this.imagen).then((res)=>{console.log("Bien"),console.log(res);
+          this.router.navigate(['/Menu']);
 
-        })
-          .catch((err) => {
-            console.log(err);
-            if(err.code == "auth/invalid-email")
-            {
-              this.error("El email ingresado no tiene un formato valido");
-            }
-            else
-            {
-              if(err.code ==  "auth/weak-password")
+          })
+            .catch((err) => {
+              console.log(err);
+              if(err.code == "auth/invalid-email")
               {
-                this.error("La contraseña debe ser de al menos 6 caracteres");
+                this.error("El email ingresado no tiene un formato valido");
               }
               else
               {
-                if(err.code == "auth/email-already-in-use")
+                if(err.code ==  "auth/weak-password")
                 {
-                  this.error("El email ya esta en uso");
+                  this.error("La contraseña debe ser de al menos 6 caracteres");
                 }
                 else
                 {
-                 this.error("Error de conexion con el servidor");
+                  if(err.code == "auth/email-already-in-use")
+                  {
+                    this.error("El email ya esta en uso");
+                  }
+                  else
+                  {
+                  this.error("Error de conexion con el servidor");
+                  }
                 }
               }
-            }
-          });
+            });
       }
     }
   }

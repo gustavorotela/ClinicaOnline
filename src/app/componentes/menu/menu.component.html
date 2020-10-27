@@ -1,32 +1,40 @@
-<p-toolbar>
-    <div class="ui-toolbar-group-left">
-        <div>
-        <div *ngIf="tipo == 6"> <!--SOCIOS VEN TODO-->    
-            <button pButton type="button" icon="pi pi-home" label="Inicio"  routerLink="/MenuPrincipal"></button>    
-            <button pButton type="button" icon="pi pi-id-card" label="Empleados"  routerLink="/Empleados"></button>
-            <button pButton type="button" icon="pi pi-apple" label="Administrar menú" routerLink="/MenuProductos"></button>
-            <button pButton type="button" icon="pi pi-th-large" label="Administrar mesas" routerLink="/MenuMesas"></button>
-            <button pButton type="button" icon="pi pi-dollar" label="Administrar pagos" routerLink="/AdministrarCuentas"></button>
-            
-        </div>
-        <div *ngIf="tipo != 1 && tipo != 2 && tipo != 6"> <!--EMPLEADOS GASTRONÓMICOS-->
-            <button pButton type="button" icon="pi pi-home" label="Inicio"  routerLink="/MenuPrincipal"></button>    
-            <button pButton type="button" icon="pi pi-info-circle" label="Pedidos a realizar" routerLink="/PedidosARealizar"></button>
-        </div>
-        <div *ngIf="tipo == 2"> <!--MOZO-->
-            <button pButton type="button" icon="pi pi-home" label="Inicio"  routerLink="/MenuPrincipal"></button>    
-            <button pButton type="button" icon="pi pi-th-large" label="Administrar mesas" routerLink="/MenuMesas"></button>
-            <button pButton type="button" icon="pi pi-info-circle" label="Pedidos a realizar" routerLink="/PedidosARealizar"></button>
-        </div>
-        <div *ngIf="tipo == 1"> <!--CLIENTE-->
-            <button pButton type="button" icon="pi pi-home" label="Inicio"  routerLink="/MenuPrincipal"></button>    
-            <button pButton type="button" icon="pi pi-info-circle" label="Mis pedidos" routerLink="/MisPedidos"></button>
-            <button pButton type="button" icon="pi pi-info-circle" label="Mis encuestas" routerLink="/MisEncuestas"></button>
-        </div>
-        </div>  
+<style>
+    .bd-placeholder-img {
+    font-size: 1.125rem;
+    text-anchor: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
+  @media (min-width: 768px) {
+    .bd-placeholder-img-lg {
+      font-size: 3.5rem;
+    }
+  }
+</style>
+
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <a class="navbar-brand" href="#">Fixed navbar</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/Turnos">Mis turnos</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/TurnoAlta">Nuevo turno</a>
+            </li>
+        </ul>
+        <form class="form-inline mt-2 mt-md-0">
+        <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
     </div>
-    <div class="ui-toolbar-group-right">
-        <a routerLink="/AdministrarPacientes/{{usuario}}"><img class='avatar' src="/assets/imagenes/{{imagen}}" width='50' height="30" cir radius='50%' alt=""></a>
-        <button pButton type="button" icon="pi pi-times" label="Logout" (click)="Logout()" class="ui-button-danger"></button>
-    </div>
-</p-toolbar>
+</nav>

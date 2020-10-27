@@ -45,7 +45,7 @@ export class LoginComponent implements OnInit {
     {
       this.auth.logear(this.email,this.pass)
       .then((res) => {console.log('logeado');
-      //this.router.navigate(['/Principal']);
+      this.router.navigate(['/Principal']);
         })
       .catch((err) => {
         this.error(err.message)

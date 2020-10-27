@@ -20,6 +20,8 @@ import { AltaComponent } from './componentes/turnos/alta/alta.component';
 import { ModificacionComponent } from './componentes/turnos/modificacion/modificacion.component';
 import { BajaComponent } from './componentes/turnos/baja/baja.component';
 import { MenuComponent } from './componentes/menu/menu.component';
+import { TurnoComponent } from './componentes/turnos/turno/turno.component';
+import { ProfesionalComponent } from './componentes/profesional/profesional.component';
 
 const config = {
   apiKey: "AIzaSyAwnftqjnkgSl4_5LcoaAkU4mXryU5ORsQ",
@@ -40,7 +42,9 @@ const config = {
     AltaComponent,
     ModificacionComponent,
     BajaComponent,
-    MenuComponent
+    MenuComponent,
+    TurnoComponent,
+    ProfesionalComponent
   ],
   imports: [
     BrowserModule,

@@ -28,18 +28,6 @@ export class MiHttpService {
     return this.afAuth.auth.signOut();
   }
 
-  registrar(usuario : Usuario, image:any)
-  {
-    return new Promise( (resolve , reject) =>
-      {
-        this.afStorage.upload('prueba/1',image)
-        this.afAuth.auth.createUserWithEmailAndPassword(usuario.email,usuario.pass)
-        .then( userData => {resolve(userData);this.SendVerificationMail();}, err => reject(err));
-        this.guardarUsuario(usuario);
-      }    
-    );
-  }
-
   SendVerificationMail() {
     return this.afAuth.auth.currentUser.sendEmailVerification()
     .then(() => {
@@ -66,44 +54,108 @@ export class MiHttpService {
     );
   }
 
-  guardarUsuario(usuario)
+  guardarHorario(horario)
   {
-    const resultadosUsuarios = this.afDB.list("/usuarios");
-    resultadosUsuarios.push(usuario);
+    const listadoPeliculas = this.afDB.list("/Horarios");
+    listadoPeliculas.push(horario);
   }
 
-  /*SendVerificationMail() {
-    return this.afAuth.auth.currentUser.sendEmailVerification()
-    .then(() => {
-      this.router.navigate(['<!-- enter your route name here -->']);
-    })
+  TraerEspecialidades()
+  {
+    this.respuestasAFL = this.afDB.list("/Especialidades");
+    this.respuestasObservable = this.respuestasAFL.valueChanges();
+    return this.respuestasObservable;
   }
 
-  // Sign up with email/password
-  SignUp(email, password) {
-    return this.afAuth.auth.createUserWithEmailAndPassword(email, password)
-      .then((result) => {
-        this.SendVerificationMail(); // Sending email verification notification, when new user registers
-      }).catch((error) => {
-        window.alert(error.message)
-      })
+  TraerUltimaEspecialidad()
+  {
+    this.respuestasAFL = this.afDB.list("/Especialidades",ref => ref.limitToLast(1));
+    this.respuestasObservable = this.respuestasAFL.valueChanges();
+    return this.respuestasObservable;
   }
 
-  // Sign in with email/password
-  SignIn(email, password) {
-    return this.afAuth.auth.signInWithEmailAndPassword(email, password)
-      .then((result) => {
-        if (result.user.emailVerified !== true) {
-          this.SendVerificationMail();
-          window.alert('Please validate your email address. Kindly check your inbox.');
-        } else {
-          this.ngZone.run(() => {
-            this.router.navigate(['<!-- enter your route name here -->']);
-          });
+  CargarEspecialidad(id,especialidad)
+  {
+    const nuevaEspecialidad = this.afDB.list("/Especialidades");
+    nuevaEspecialidad.set(id, especialidad);
+  }
+
+  cargarTurno(id,turno)
+  {
+    const nuevoTurno = this.afDB.list("/Turnos");
+    nuevoTurno.set(id, turno);
+  }
+
+  traerTurnos()
+  {
+    this.respuestasAFL = this.afDB.list("/Turnos");
+    this.respuestasObservable = this.respuestasAFL.valueChanges();
+    return this.respuestasObservable;
+  }
+
+  traerUltimoTurno()
+  {
+    this.respuestasAFL = this.afDB.list("/Turnos",ref => ref.limitToLast(1));
+    this.respuestasObservable = this.respuestasAFL.valueChanges();
+    return this.respuestasObservable;
+  }
+
+  traerProfesionales()
+  {
+    this.respuestasAFL = this.afDB.list("/Profesionales");
+    this.respuestasObservable = this.respuestasAFL.valueChanges();
+    return this.respuestasObservable;
+  }
+
+  traerUltimoProfesional()
+  {
+    this.respuestasAFL = this.afDB.list("/Profesionales",ref => ref.limitToLast(1));
+    this.respuestasObservable = this.respuestasAFL.valueChanges();
+    return this.respuestasObservable;
+  }
+
+  cargarUsuario(id, usuario, image)
+  {
+    return new Promise( (resolve , reject) =>
+      {
+        this.afStorage.upload('prueba/1',image)
+        this.afAuth.auth.createUserWithEmailAndPassword(usuario.email,usuario.pass)
+        .then( userData => {resolve(userData);this.SendVerificationMail();}, err => reject(err));
+        if(usuario.tipo == 1){
+          const nuevoTurno = this.afDB.list("/Clientes");
+          nuevoTurno.set(id, usuario);
         }
-        this.SetUserData(result.user);
-      }).catch((error) => {
-        window.alert(error.message)
-      })
+        else{
+          const nuevoTurno = this.afDB.list("/Profesionales");
+          nuevoTurno.set(id, usuario);
+        }
+      }    
+    );
+  }
+
+  traerClientes()
+  {
+    this.respuestasAFL = this.afDB.list("/Clientes");
+    this.respuestasObservable = this.respuestasAFL.valueChanges();
+    return this.respuestasObservable;
+  }
+
+  /*registrar(usuario : Usuario, image:any)
+  {
+    return new Promise( (resolve , reject) =>
+      {
+        this.afStorage.upload('prueba/1',image)
+        this.afAuth.auth.createUserWithEmailAndPassword(usuario.email,usuario.pass)
+        .then( userData => {resolve(userData);this.SendVerificationMail();}, err => reject(err));
+        //this.guardarUsuario(usuario);
+      }    
+    );
   }*/
+
+  traerUltimoCliente()
+  {
+    this.respuestasAFL = this.afDB.list("/Clientes",ref => ref.limitToLast(1));
+    this.respuestasObservable = this.respuestasAFL.valueChanges();
+    return this.respuestasObservable;
+  }
 }

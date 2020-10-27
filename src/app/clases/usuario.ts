@@ -8,7 +8,7 @@ export class Usuario {
     tipo:number;
     usuario:string;
     imagen:any;
-    
+
     constructor(mail:string, nombre:string, apellido:string, pass:string, tipo:number, usuario:string, imagen:any)
     {
         this.email = mail;
