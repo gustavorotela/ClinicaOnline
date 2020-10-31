@@ -21,6 +21,7 @@ export class ProfesionalComponent implements OnInit {
   juevesHasta:number;
   viernesHasta:number;
   sabadoHasta:number;
+  listaEspecialidades:string[];
 
   constructor(private miHttp:MiHttpService) { 
     this.dias["Lunes"] = {"Desde":-1,"Hasta":-1};
@@ -57,6 +58,9 @@ export class ProfesionalComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.miHttp.TraerEspecialidades().subscribe( data => {
+      this.listaEspecialidades = data;
+    });
   }
 
 }

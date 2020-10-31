@@ -1,3 +1,5 @@
+<app-menu></app-menu>
+
 <!-- elegir horarios de atención -->
 
 <input type="checkbox" id="cbox1" value="second_checkbox" (change)="checkDia('Lunes')"><label for="cbox1">Lunes</label><br>
@@ -17,7 +19,16 @@ Desde: <input type="number" [(ngModel)]="sabadoDesde"> Hasta: <input type="numbe
 
 <!-- modificar especialidades -->
 
-
+<!--<div>
+    <ul class="list-group mb-3">
+        <div *ngFor="let actor of listaActores">
+            <li class="list-group-item d-flex justify-content-between lh-condensed">
+            <div>
+                <h6 class="my-0"><input type="checkbox" (change)="checkActor(actor.nombre, actor.apellido)"> {{actor.nombre}} {{actor.apellido}}</h6>
+            </div>
+            </li>
+        </div>
+    </ul>
+</div>-->
 
 <!-- modificar imagenes -->
-<!--  -->

@@ -30,7 +30,6 @@ export class LoginComponent implements OnInit {
     private router: Router) {
       this.progreso=0;
       this.ProgresoDeAncho="0%";
-
   }
 
   ngOnInit() {
