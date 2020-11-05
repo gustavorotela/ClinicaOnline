@@ -46,6 +46,11 @@ export class ProfesionalComponent implements OnInit {
     }
   }
 
+  checkDia(dia)
+  {
+
+  }
+
   Prueba()
   {
     console.log(this.dias);
