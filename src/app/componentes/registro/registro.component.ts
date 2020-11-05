@@ -47,36 +47,35 @@ export class RegistroComponent implements OnInit {
       else
       {
         this.usuario.pass = this.pass;
-        if(this.usuario.tipo == 1)
-          this.auth.cargarUsuario(this.id, this.usuario,this.imagen).then((res)=>{console.log("Bien"),console.log(res);
-          this.router.navigate(['/Menu']);
+        this.auth.cargarUsuario(this.id, this.usuario,this.imagen).then((res)=>{console.log("Bien"),console.log(res);
+        this.router.navigate(['/Menu']);
 
-          })
-            .catch((err) => {
-              console.log(err);
-              if(err.code == "auth/invalid-email")
+        })
+          .catch((err) => {
+            console.log(err);
+            if(err.code == "auth/invalid-email")
+            {
+              this.error("El email ingresado no tiene un formato valido");
+            }
+            else
+            {
+              if(err.code ==  "auth/weak-password")
               {
-                this.error("El email ingresado no tiene un formato valido");
+                this.error("La contraseña debe ser de al menos 6 caracteres");
               }
               else
               {
-                if(err.code ==  "auth/weak-password")
+                if(err.code == "auth/email-already-in-use")
                 {
-                  this.error("La contraseña debe ser de al menos 6 caracteres");
+                  this.error("El email ya esta en uso");
                 }
                 else
                 {
-                  if(err.code == "auth/email-already-in-use")
-                  {
-                    this.error("El email ya esta en uso");
-                  }
-                  else
-                  {
-                  this.error("Error de conexion con el servidor");
-                  }
+                this.error("Error de conexion con el servidor");
                 }
               }
-            });
+            }
+          });
       }
     }
   }

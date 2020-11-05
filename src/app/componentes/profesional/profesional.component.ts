@@ -33,9 +33,17 @@ export class ProfesionalComponent implements OnInit {
   }
 
 
-  checkDia(dia:string)
+  checkEspecialidad(especialidad:string)
   {
-    
+    if(this.listaEspecialidades.indexOf(especialidad) < 0)
+    {
+      this.listaEspecialidades.push(especialidad);
+    }
+    else
+    {
+      const index: number = this.listaEspecialidades.indexOf(especialidad);
+      this.listaEspecialidades.splice(index, 1);
+    }
   }
 
   Prueba()
