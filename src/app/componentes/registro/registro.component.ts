@@ -16,18 +16,15 @@ export class RegistroComponent implements OnInit {
   pass2 : string;
   pass : string;
   errorMsg : string = "";
-  imagen : any[] = [];
+  imagen : any;
   id:number;
   
   public files: NgxFileDropEntry[] = [];
   public msgs : any = [];
   public imagenPreview : any[] = [];
 
-  constructor(public auth : MiHttpService,private router : Router) {
+  constructor(public miHttp : MiHttpService,private router : Router) {
     this.usuario = new Usuario('','','','',0,'','');
-  }
-
-  ngOnInit() {
   }
 
   Registrar()
@@ -39,7 +36,6 @@ export class RegistroComponent implements OnInit {
     }
     else
     {
-      console.log('hola');
       if(this.pass != this.pass2)
       {
         this.error("Las contraseñas no coinciden");
@@ -47,7 +43,7 @@ export class RegistroComponent implements OnInit {
       else
       {
         this.usuario.pass = this.pass;
-        this.auth.cargarUsuario(this.id, this.usuario,this.imagen).then((res)=>{console.log("Bien"),console.log(res);
+        this.miHttp.cargarUsuario(this.id.toString(), this.usuario,this.imagen).then((res)=>{console.log("Bien"),console.log(res);
         this.router.navigate(['/Menu']);
 
         })
@@ -91,8 +87,8 @@ export class RegistroComponent implements OnInit {
           reader.onload = () => {
             this.imagenPreview.push(reader.result);
           }
-          this.imagen.push(file);
-          console.log(this.imagen);
+          this.imagen = file;
+          //console.log(this.imagen);
         });
       } else {
         const fileEntry = droppedFile.fileEntry as FileSystemDirectoryEntry;
@@ -116,4 +112,20 @@ export class RegistroComponent implements OnInit {
     this.display = true;
   }
 
+  ngOnInit() {
+    this.miHttp.traerUltimoProfesional().subscribe( data => {
+      if(data == "")
+      {
+        this.id = 1;
+        console.log(this.id);
+      }
+      else
+      {
+        this.id = data[0].id;
+        this.id++;
+        console.log(this.id);
+      }
+    });
+    
+  }
 }

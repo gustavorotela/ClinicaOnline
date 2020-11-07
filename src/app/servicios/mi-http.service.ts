@@ -118,7 +118,9 @@ export class MiHttpService {
   {
     return new Promise( (resolve , reject) =>
       {
-        this.afStorage.upload('prueba/1',image)
+        for (let i = 0; i < image.length; i++) {
+          this.afStorage.upload('prueba/'+i,image[i]);
+        }
         this.afAuth.auth.createUserWithEmailAndPassword(usuario.email,usuario.pass)
         .then( userData => {resolve(userData);this.SendVerificationMail();}, err => reject(err));
         if(usuario.tipo == 1){
