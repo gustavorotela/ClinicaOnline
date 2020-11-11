@@ -24,6 +24,11 @@ export class AltaComponent implements OnInit {
   listaMedicosElegidos:any[];
   medico:number;
   listaHorarios:string[];
+  header1:boolean;
+  header2:boolean;
+  header3:boolean;
+  header4:boolean;
+  listaProfPorEspec:string[];
 
   constructor(private miHttp:MiHttpService) {
     this.nuevoTurno = new Turno();
@@ -37,6 +42,8 @@ export class AltaComponent implements OnInit {
     this.fechaMaxima.setDate(this.today.getDate() + 15);
     this.mes = this.fechaMaxima.getMonth() + 1;
     this.maximo = this.fechaMaxima.getFullYear().toString() + '-' + this.mes.toString() + "-" + this.fechaMaxima.getDate().toString();
+    this.header1 = true;
+    this.listaProfPorEspec = [];
   }
 
   guardarTurno()
@@ -67,6 +74,18 @@ export class AltaComponent implements OnInit {
       if(this.listaProfesionales.Especialidad == this.espec)
         this.listaMedicosElegidos.push(this.listaProfesionales);
     }
+  }
+
+  seleccionarEspecialicacion(especialidad)
+  {
+    this.espec = especialidad;
+    
+    for (let i = 0; i < this.listaProfesionales.length; i++) {
+      if(this.listaProfesionales[i].especialidades.indexOf(this.espec) != -1)
+        this.listaProfPorEspec.push(this.listaProfesionales[i]);
+    }
+    this.header1 = false;
+    this.header2 = true;
   }
 
   horarios()

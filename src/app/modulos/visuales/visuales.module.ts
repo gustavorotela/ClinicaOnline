@@ -22,6 +22,8 @@ import { MessageModule } from 'primeng/message';
 import { ToggleButtonModule } from 'primeng/togglebutton';
 import { FileUploadModule } from 'primeng/fileupload';
 import { NgxFileDropModule } from 'ngx-file-drop';
+import {OrderListModule} from 'primeng/orderlist';
+import {AccordionModule} from 'primeng/accordion';
 
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -52,7 +54,9 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     FileUploadModule,
     BrowserModule,
     BrowserAnimationsModule,
-    NgxFileDropModule
+    NgxFileDropModule,
+    OrderListModule,
+    AccordionModule
   ],
   exports:[
     CardModule,
@@ -77,7 +81,9 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     FileUploadModule,
     BrowserModule,
     BrowserAnimationsModule,
-    NgxFileDropModule
+    NgxFileDropModule,
+    OrderListModule,
+    AccordionModule
   ],  
   declarations: []
 })

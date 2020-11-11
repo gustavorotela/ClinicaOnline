@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MiHttpService } from '../../servicios/mi-http.service';
+import { AngularFireAuth } from "@angular/fire/auth";
+import { Usuario } from 'src/app/clases/usuario';
+import { Profesional } from 'src/app/clases/profesional';
 
 @Component({
   selector: 'app-profesional',
@@ -22,57 +25,115 @@ export class ProfesionalComponent implements OnInit {
   viernesHasta:number;
   sabadoHasta:number;
   listaEspecialidades:string[];
+  profesionalEspecialidades:string[] = [];
+  email:any;
+  usuario:Profesional;
+  id:number;
 
-  constructor(private miHttp:MiHttpService) { 
-    this.dias["Lunes"] = {"Desde":-1,"Hasta":-1};
-    this.dias["Martes"] = {"Desde":-1,"Hasta":-1};
-    this.dias["Miercoles"] = {"Desde":-1,"Hasta":-1};
-    this.dias["Jueves"] = {"Desde":-1,"Hasta":-1};
-    this.dias["Viernes"] = {"Desde":-1,"Hasta":-1};
-    this.dias["Sabado"] = {"Desde":-1,"Hasta":-1};  
+  constructor(private miHttp:MiHttpService, public afAuth : AngularFireAuth) { 
   }
-
 
   checkEspecialidad(especialidad:string)
   {
-    if(this.listaEspecialidades.indexOf(especialidad) < 0)
+    if(this.profesionalEspecialidades.indexOf(especialidad) < 0)
     {
-      this.listaEspecialidades.push(especialidad);
-    }
-    else
-    {
+      this.profesionalEspecialidades.push(especialidad);
       const index: number = this.listaEspecialidades.indexOf(especialidad);
       this.listaEspecialidades.splice(index, 1);
     }
+    else
+    {
+      this.listaEspecialidades.push(especialidad);
+      const index: number = this.profesionalEspecialidades.indexOf(especialidad);
+      this.profesionalEspecialidades.splice(index, 1);
+    }
+    this.listaEspecialidades.sort();
+    this.profesionalEspecialidades.sort();
   }
 
   checkDia(dia)
   {
-
+    console.log(this.usuario);
   }
 
   Prueba()
   {
-    console.log(this.dias);
-    this.dias["Lunes"]["Desde"] = this.lunesDesde;
-    this.dias["Lunes"]["Hasta"] = this.lunesHasta;
-    this.dias["Martes"]["Desde"] = this.martesDesde;
-    this.dias["Martes"]["Hasta"] = this.martesHasta;
-    this.dias["Miercoles"]["Desde"] = this.miercolesDesde;
-    this.dias["Miercoles"]["Hasta"] = this.miercolesHasta;
-    this.dias["Jueves"]["Desde"] = this.juevesDesde;
-    this.dias["Jueves"]["Hasta"] = this.juevesHasta;
-    this.dias["Viernes"]["Desde"] = this.viernesDesde;
-    this.dias["Viernes"]["Hasta"] = this.viernesHasta;
-    this.dias["Sabado"]["Desde"] = this.sabadoDesde;
-    this.dias["Sabado"]["Hasta"] = this.sabadoHasta;
-    
-    this.miHttp.guardarHorario(this.dias);
+    this.usuario.especialidades = this.profesionalEspecialidades;
+    if(this.usuario.lunes == true)
+      this.usuario.lunes = this.lunesDesde + ' ' + this.lunesHasta;
+    if(this.usuario.martes == true)
+      this.usuario.martes = this.martesDesde + ' ' + this.martesHasta;
+    if(this.usuario.miercoles == true)
+      this.usuario.miercoles = this.miercolesDesde + ' ' + this.miercolesHasta;
+    if(this.usuario.jueves == true)
+      this.usuario.jueves = this.juevesDesde + ' ' + this.juevesHasta;
+    if(this.usuario.viernes == true)
+      this.usuario.viernes = this.viernesDesde + ' ' + this.viernesHasta;
+    if(this.usuario.sabado == true)
+      this.usuario.sabado = this.sabadoDesde + ' ' + this.sabadoHasta;
+
+    this.miHttp.modificarProfesional(this.id.toString(),this.usuario);
   }
 
   ngOnInit(): void {
     this.miHttp.TraerEspecialidades().subscribe( data => {
       this.listaEspecialidades = data;
+    });
+    this.afAuth.auth.onAuthStateChanged(user =>{
+      if (user) {
+        this.email = user.email;
+      } else {
+        console.log('nada');
+      }
+    });
+    this.miHttp.traerProfesionales().subscribe( profesionales => {
+      for (let i = 0; i < profesionales.length; i++) {
+        if(this.email == profesionales[i].email){
+          this.usuario = profesionales[i];
+          this.id = i;
+          this.id++;
+          if(this.usuario.lunes != false)
+          {
+            let lunes = this.usuario.lunes.split(" ");
+            this.lunesDesde = lunes[0];
+            this.lunesHasta = lunes[1];
+          }
+          if(this.usuario.martes != false)
+          {
+            let martes = this.usuario.martes.split(" ");
+            this.martesDesde = martes[0];
+            this.martesHasta = martes[1];
+          }
+          if(this.usuario.miercoles != false)
+          {
+            let miercoles = this.usuario.miercoles.split(" ");
+            this.miercolesDesde = miercoles[0];
+            this.miercolesHasta = miercoles[1];
+          }
+          if(this.usuario.jueves != false)
+          {
+            let jueves = this.usuario.jueves.split(" ");
+            this.juevesDesde = jueves[0];
+            this.juevesHasta = jueves[1];
+          }
+          if(this.usuario.viernes != false)
+          {
+            let viernes = this.usuario.viernes.split(" ");
+            this.viernesDesde = viernes[0];
+            this.viernesHasta = viernes[1];
+          }
+          if(this.usuario.sabado != false)
+          {
+            let sabado = this.usuario.sabado.split(" ");
+            this.sabadoDesde = sabado[0];
+            this.sabadoHasta = sabado[1];
+          }
+          break;
+        }
+      }
+      for (let i = 0; i < this.usuario.especialidades.length; i++) {
+        this.checkEspecialidad(this.usuario.especialidades[i]);
+      }
     });
   }
 

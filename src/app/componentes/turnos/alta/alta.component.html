@@ -7,39 +7,51 @@
     <div class="col-md-8 order-md-1">
       <h4 class="mb-3">Turno</h4>
       <form class="needs-validation" novalidate>
-        <div class="mb-3">
-            <label for="username">Especialidad</label>
-            <div class="input-group">
-                <select name="select" class="form-control" [(ngModel)]="espec" (change)="traerMedicos()">
-                    <option disabled selected value> -- Seleccione una opción -- </option>
-                    <option [value]="especialidad" *ngFor="let especialidad of listaEspecialidades">{{especialidad}}</option> 
-                </select>
+        <p-accordion>
+          <p-accordionTab header="Especialidad" [selected]="header1">
+            <div class="col-md-4 order-md-2 mb-4">
+              <ul class="list-group mb-3">
+                <div *ngFor="let especialidad of listaEspecialidades">
+                  <li class="list-group-item d-flex justify-content-between lh-condensed">
+                    <div>
+                      <h6 class="my-0"><input type="checkbox" (change)="seleccionarEspecialicacion(especialidad)"> {{especialidad}}</h6>
+                    </div>
+                  </li>
+                </div>
+              </ul>
             </div>
-        </div>
-
-        <div class="mb-3" *ngIf="espec==''">
-          <label for="email">Medico</label>
-          <div class="input-group">
-            <select name="select" class="form-control" [(ngModel)]="medico" (change)="horarios()">
-                <option disabled selected value> -- Seleccione una opción -- </option>
-                <option [value]="medico.id" *ngFor="let medico of listaMedicosElegidos">{{medico.nombre}} {{medico.apellido}}</option> 
-            </select>
-          </div>
-        </div>
-
-        <div class="mb-3">
-          <label for="address">Fecha del turno</label>
-          <input [(ngModel)]="nuevoTurno.fecha" id="datefield" name="publico" type="date" min='{{minimo}}' max='{{maximo}}' class="form-control">
-          <button (click)="horarios()">Prueba</button>
-        </div>
-
-        <div class="mb-3">
-          <label for="username">Horario</label>
-          <select name="select" class="form-control" [(ngModel)]="espec">
-            <option disabled selected value> -- Seleccione una hora -- </option>
-            <option [value]="especialidad" *ngFor="let especialidad of listaHorarios">{{especialidad}}</option> 
-          </select>
-        </div>
+          </p-accordionTab>
+          <p-accordionTab header="Header 2" [selected]="header2">
+            <label for="email">Medico</label>
+            <div class="input-group">
+              <ul class="list-group mb-3">
+                <div *ngFor="let profesional of listaProfPorEspec">
+                  <li class="list-group-item d-flex justify-content-between lh-condensed">
+                    <div>
+                      <h6 class="my-0"><input type="checkbox" (change)="seleccionarEspecialicacion(especialidad)"> {{profesional.apellido}}</h6>
+                    </div>
+                  </li>
+                </div>
+              </ul>
+            </div>
+          </p-accordionTab>
+          <p-accordionTab header="Header 3" [selected]="header3">
+            <div class="mb-3">
+              <label for="address">Fecha del turno</label>
+              <input [(ngModel)]="nuevoTurno.fecha" id="datefield" name="publico" type="date" min='{{minimo}}' max='{{maximo}}' class="form-control">
+              <button (click)="horarios()">Prueba</button>
+            </div>    
+          </p-accordionTab>
+          <p-accordionTab header="Header 4" [selected]="header4">
+            <div class="mb-3">
+              <label for="username">Horario</label>
+              <select name="select" class="form-control" [(ngModel)]="espec">
+                <option disabled selected value> -- Seleccione una hora -- </option>
+                <option [value]="especialidad" *ngFor="let especialidad of listaHorarios">{{especialidad}}</option> 
+              </select>
+            </div>  
+          </p-accordionTab>
+        </p-accordion>
 
         <button class="btn btn-primary btn-lg btn-block" type="submit" (click)="guardarTurno()">Pedir turno</button>
       </form>

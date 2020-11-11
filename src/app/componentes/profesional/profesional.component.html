@@ -1,34 +1,45 @@
 <app-menu></app-menu>
-
+<br>
+<br>
 <!-- elegir horarios de atención -->
 
-<input type="checkbox" id="cbox1" value="second_checkbox" (change)="checkDia('Lunes')"><label for="cbox1">Lunes</label><br>
-Desde: <input type="number" [(ngModel)]="lunesDesde"> Hasta: <input type="number" [(ngModel)]="lunesHasta"><br><br>
-<input type="checkbox" id="cbox2" value="second_checkbox" (change)="checkDia('Martes')"><label for="cbox2">Martes</label><br>
-Desde: <input type="number" [(ngModel)]="martesDesde"> Hasta: <input type="number" [(ngModel)]="martesHasta"><br><br>
-<input type="checkbox" id="cbox3" value="second_checkbox" (change)="checkDia('Miercoles')"><label for="cbox3">Miércoles</label><br>
-Desde: <input type="number" [(ngModel)]="miercolesDesde"> Hasta: <input type="number" [(ngModel)]="miercolesHasta"><br><br>
-<input type="checkbox" id="cbox4" value="second_checkbox" (change)="checkDia('Jueves')"><label for="cbox4">Jueves</label><br>
-Desde: <input type="number" [(ngModel)]="juevesDesde"> Hasta: <input type="number" [(ngModel)]="juevesHasta"><br><br>
-<input type="checkbox" id="cbox5" value="second_checkbox" (change)="checkDia('Viernes')"><label for="cbox5">Viernes</label><br>
-Desde: <input type="number" [(ngModel)]="viernesDesde"> Hasta: <input type="number" [(ngModel)]="viernesHasta"><br><br>
-<input type="checkbox" id="cbox6" value="second_checkbox" (change)="checkDia('Sabado')"><label for="cbox6">Sábado</label><br>
-Desde: <input type="number" [(ngModel)]="sabadoDesde"> Hasta: <input type="number" [(ngModel)]="sabadoHasta">
+<input type="checkbox" id="cbox1" value="second_checkbox" [(ngModel)]="usuario.lunes"  (change)="checkDia('Lunes')"><label for="cbox1">Lunes</label><br>
+<div [hidden]="usuario.lunes == false"> Desde: <input type="number" [(ngModel)]="lunesDesde"> Hasta: <input type="number" [(ngModel)]="lunesHasta"><br></div><br> 
+<input type="checkbox" id="cbox2" value="second_checkbox" [(ngModel)]="usuario.martes" (change)="checkDia('Martes')"><label for="cbox2">Martes</label><br>
+<div [hidden]="usuario.martes == false">Desde: <input type="number" [(ngModel)]="martesDesde"> Hasta: <input type="number" [(ngModel)]="martesHasta"><br></div><br>
+<input type="checkbox" id="cbox3" value="second_checkbox" [(ngModel)]="usuario.miercoles" (change)="checkDia('Miercoles')"><label for="cbox3">Miércoles</label><br>
+<div [hidden]="usuario.miercoles == false">Desde: <input type="number" [(ngModel)]="miercolesDesde"> Hasta: <input type="number" [(ngModel)]="miercolesHasta"><br></div><br>
+<input type="checkbox" id="cbox4" value="second_checkbox" [(ngModel)]="usuario.jueves" (change)="checkDia('Jueves')"><label for="cbox4">Jueves</label><br>
+<div [hidden]="usuario.jueves == false">Desde: <input type="number" [(ngModel)]="juevesDesde"> Hasta: <input type="number" [(ngModel)]="juevesHasta"><br></div><br>
+<input type="checkbox" id="cbox5" value="second_checkbox" [(ngModel)]="usuario.viernes" (change)="checkDia('Viernes')"><label for="cbox5">Viernes</label><br>
+<div [hidden]="usuario.viernes == false">Desde: <input type="number" [(ngModel)]="viernesDesde"> Hasta: <input type="number" [(ngModel)]="viernesHasta"><br></div><br>
+<input type="checkbox" id="cbox6" value="second_checkbox" [(ngModel)]="usuario.sabado" (change)="checkDia('Sabado')"><label for="cbox6">Sábado</label><br>
+<div [hidden]="usuario.sabado == false">Desde: <input type="number" [(ngModel)]="sabadoDesde"> Hasta: <input type="number" [(ngModel)]="sabadoHasta"></div>
 
-<button (click)="Prueba()">Prueba</button>
 
-<!-- modificar especialidades -->
-
-<div>
-    <ul class="list-group mb-3">
-        <div *ngFor="let especialidad of listaEspecialidades">
-            <li class="list-group-item d-flex justify-content-between lh-condensed">
-            <div>
-                <h6 class="my-0"><input type="checkbox" (change)="checkEspecialidad(especialidad)"> {{especialidad}}</h6>
+<div class="row">
+    <div class="col-md-4 order-md-2 mb-4">
+        <ul class="list-group mb-3">
+            <div *ngFor="let especialidad of listaEspecialidades">
+                <li class="list-group-item d-flex justify-content-between lh-condensed" (click)="checkEspecialidad(especialidad)">
+                <div >
+                    <h6 class="my-0" >{{especialidad}}</h6>
+                </div>
+                </li>
             </div>
-            </li>
-        </div>
-    </ul>
+        </ul>
+    </div>
+    <div class="col-md-4 order-md-2 mb-4">
+        <ul class="list-group mb-3">
+            <div *ngFor="let especialidad of profesionalEspecialidades">
+                <li class="list-group-item d-flex justify-content-between lh-condensed" (click)="checkEspecialidad(especialidad)">
+                <div >
+                    <h6 class="my-0" >{{especialidad}}</h6>
+                </div>
+                </li>
+            </div>
+        </ul>
+    </div>
 </div>
 
-<!-- modificar imagenes -->
+<button (click)="Prueba()">Prueba</button>

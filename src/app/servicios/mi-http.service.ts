@@ -1,11 +1,11 @@
 import { Injectable, NgZone } from '@angular/core';
 import { AngularFireDatabase, AngularFireList } from "angularfire2/database";
 import { Usuario } from '../clases/usuario';
-import "rxjs";
 import { Observable } from 'rxjs';
 import { AngularFireAuth } from "@angular/fire/auth";
 import { Router } from "@angular/router";
 import { AngularFireStorage} from 'angularfire2/storage';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -41,23 +41,31 @@ export class MiHttpService {
       {
         this.afAuth.auth.signInWithEmailAndPassword(email, pass)
         .then( userData => {resolve(userData);
-          if (userData.user.emailVerified !== true) {
+          /*if (userData.user.emailVerified !== true) {
             this.SendVerificationMail();
             window.alert('Please validate your email address. Kindly check your inbox.');
           } else {
-            this.ngZone.run(() => {
+            this.ngZone.run(() => {*/
               this.router.navigate(['/']);
-            });
-          }
+              
+            /*});
+          }*/
         }, err => reject(err));
       }    
     );
   }
 
-  guardarHorario(horario)
+  getAuth()
   {
-    const listadoPeliculas = this.afDB.list("/Horarios");
-    listadoPeliculas.push(horario);
+    /*return this.afAuth.auth.onAuthStateChanged(user =>{
+      if (user) {
+        return user.email;
+      } else {
+        this.ngZone.run(() => {
+          this.router.navigate(['/']);
+        });
+      }
+    });*/
   }
 
   TraerEspecialidades()
@@ -114,7 +122,7 @@ export class MiHttpService {
     return this.respuestasObservable;
   }
 
-  cargarUsuario(id, usuario, image)
+  cargarUsuario(id, usuario, image, tipo)
   {
     return new Promise( (resolve , reject) =>
       {
@@ -123,7 +131,7 @@ export class MiHttpService {
         }
         this.afAuth.auth.createUserWithEmailAndPassword(usuario.email,usuario.pass)
         .then( userData => {resolve(userData);this.SendVerificationMail();}, err => reject(err));
-        if(usuario.tipo == 1){
+        if(tipo == 1){
           const nuevoTurno = this.afDB.list("/Clientes");
           nuevoTurno.set(id, usuario);
         }
@@ -142,22 +150,16 @@ export class MiHttpService {
     return this.respuestasObservable;
   }
 
-  /*registrar(usuario : Usuario, image:any)
-  {
-    return new Promise( (resolve , reject) =>
-      {
-        this.afStorage.upload('prueba/1',image)
-        this.afAuth.auth.createUserWithEmailAndPassword(usuario.email,usuario.pass)
-        .then( userData => {resolve(userData);this.SendVerificationMail();}, err => reject(err));
-        //this.guardarUsuario(usuario);
-      }    
-    );
-  }*/
-
   traerUltimoCliente()
   {
     this.respuestasAFL = this.afDB.list("/Clientes",ref => ref.limitToLast(1));
     this.respuestasObservable = this.respuestasAFL.valueChanges();
     return this.respuestasObservable;
+  }
+
+  modificarProfesional(id:string,profesional)
+  {
+    this.respuestasAFL = this.afDB.list("/Profesionales");
+    this.respuestasAFL.update(id,profesional);
   }
 }
